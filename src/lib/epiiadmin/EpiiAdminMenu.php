@@ -23,7 +23,7 @@ class EpiiAdminMenu implements IAsideMaker
     private $_menu_open = false;
 
 
-    public function addMenu($id, $name, $url, $icon, $pid = 0, $badge_string = null, $badge_class = "badge badge-danger")
+    private function addMenu($id, $name, $url, $icon, $pid = 0, $badge_string = null, $badge_class = "badge badge-danger")
     {
 
         if ($badge_class == null) {
@@ -138,11 +138,7 @@ class EpiiAdminMenu implements IAsideMaker
         }, $data['menu']);
 
         $this->_menu_open = $data['menu_open'];
-       return $this->getMenu($data['menu_active_id']);
-
-
-
-
+        return $this->getMenu($data['menu_active_id']);
 
 
     }

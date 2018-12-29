@@ -43,31 +43,19 @@ class EpiiAdminUi
             "app_left_theme" => "light",
 
         ], self::$common_config);
-        $_config = $adminUi->getConfig();
+        $_config = $adminUi->getConfig()->getConfig();
         if ($_config) {
             $_data_ = array_merge($_data_, $_config);
         }
-        $navsclass = $adminUi->getTopRightNavs();
-        $navs = "";
-        foreach ($navsclass as $nav) {
-            if (is_string($nav) && class_exists($navs)) {
-                $nav_mod = new $navs();
-            } else {
-                $nav_mod = $nav;
-            }
-            if (method_exists($nav_mod, "getHtml")) {
-                $navs .= $nav_mod->getHtml();
-            }
 
-        }
-        $_data_["navlist"] = $navs;
+        $_data_["navlist"] = $adminUi->getTopRightNavHtml();
 
 
         $menu = $adminUi->getLeftMenuData();
 
-        $siteuserinfo['menu'] = $menu;
-        $siteuserinfo['menu_open'] = $adminUi->isMenuAllOpen();
-        $siteuserinfo['menu_active_id'] = (int)$adminUi->getMenuActiveId();
+        $siteuserinfo['menu'] = $menu->getConfig();
+        $siteuserinfo['menu_open'] = $menu->_isAllOpened();
+        $siteuserinfo['menu_active_id'] = $menu->_getActiveId();
 
         $asider = new EpiiAdminMenu();
 

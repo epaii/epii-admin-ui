@@ -9,14 +9,17 @@
 namespace epii\admin\ui\lib\i\epiiadmin;
 
 
+use epii\admin\ui\lib\epiiadmin\MenuConfig;
+use epii\admin\ui\lib\epiiadmin\SiteConfig;
+
 interface IEpiiAdminUi
 {
 
-    public function getConfig();
-    public function getLeftMenuData();
 
-    public function getTopRightNavs();
+    public function getConfig(): SiteConfig;
 
-    public function getMenuActiveId();
-    public function isMenuAllOpen();
+    public function getLeftMenuData(): MenuConfig;
+
+    public function getTopRightNavHtml(): string ;
+
 }
