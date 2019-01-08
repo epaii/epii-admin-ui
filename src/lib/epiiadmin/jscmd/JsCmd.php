@@ -15,14 +15,6 @@ class JsCmd
 {
 
 
-
-
-
-
-
-
-
-
     private static $_return_string = true;
 
     public static function returnData( $is_data)
@@ -48,7 +40,7 @@ class JsCmd
     public function run()
     {
         if (self::$_return_string)
-            return json(['code' => 1, "msg" => "", "data" => $this->getCmdData()]);
+            return json_encode(['code' => 1, "msg" => "", "data" => $this->getCmdData()],JSON_UNESCAPED_UNICODE);
         else return $this->getCmdData();
     }
 
