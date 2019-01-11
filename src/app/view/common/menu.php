@@ -1,4 +1,4 @@
-<aside class="main-sidebar sidebar-<?php echo $_ui_["app_left_theme"]; ?>-<?php echo $_ui_["app_theme"]; ?> elevation-4">
+<aside class="main-sidebar sidebar-<?php echo $_ui_["app_left_theme"]; ?>-<?php echo $_ui_["app_left_selected_theme"]; ?> elevation-4">
     <!-- Brand Logo -->
     <a href="<?php echo $_ui_["site_url"]; ?>" class="brand-link bg-<?php echo $_ui_["app_left_top_theme"]; ?>">
         <img src="<?php echo $_ui_["site_logo_show"]; ?>"

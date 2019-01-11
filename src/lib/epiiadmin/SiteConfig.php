@@ -18,6 +18,8 @@ namespace epii\admin\ui\lib\epiiadmin;
  * @method \epii\admin\ui\lib\epiiadmin\SiteConfig app_theme(string $app_theme)    primary warning info  danger success
  * @method \epii\admin\ui\lib\epiiadmin\SiteConfig app_left_theme(string $site_title) dark or light
  * @method \epii\admin\ui\lib\epiiadmin\SiteConfig app_left_top_theme(string $site_title)primary warning info  danger success
+ * @method \epii\admin\ui\lib\epiiadmin\SiteConfig app_left_selected_theme(string $site_title)primary warning info  danger success
+ *
  */
 class SiteConfig
 {
