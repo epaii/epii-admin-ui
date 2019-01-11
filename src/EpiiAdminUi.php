@@ -41,6 +41,7 @@ class EpiiAdminUi
             "site_title" => "管理中心",
             "app_theme" => "danger",
             "app_left_theme" => "light",
+            "app_left_top_theme"=>"danger"
 
         ], self::$common_config);
         $_config = $adminUi->getConfig()->getConfig();
