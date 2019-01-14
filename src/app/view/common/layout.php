@@ -6,7 +6,7 @@
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
-    <div class="content epii" style="padding-top: 20px"><?php echo $__CONTENT__; ?></div>
+    <div class="content" style="padding-top: 20px"><?php echo $__CONTENT__; ?></div>
 </div>
 <!-- ./wrapper -->
 <?php include_once __DIR__ . "/script.php"; ?>
