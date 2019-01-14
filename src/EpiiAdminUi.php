@@ -17,7 +17,9 @@ class EpiiAdminUi
 
         "static_url_pre" => "https://epaii.github.io/epii-admin/public/epiiadmin-js/",
         "js_app_dir" => "static/js/app/",
-        "site_url" => ""
+        "site_url" => "",
+        "version"=>"0.0.1",
+        "css"=>[]
 
     ];
 
@@ -92,13 +94,14 @@ class EpiiAdminUi
             "init_models" => [],
             "min" => ".min",
             "site_url" => self::$common_config["site_url"] ? self::$common_config["site_url"] : self::getUrl(),
-            "version" => "0.0.1",
+            "version" => self::$common_config["version"],
             "window_id" => md5(time()),
-            "data" => ['title' => isset($js_data["title"]) ? $js_data["title"] : ""]
+            "data" => ['title' => isset($data_args["title"]) ? $data_args["title"] : ""]
         ];
 
         if ($data_args)
             $data['data'] = array_merge($data['data'], $data_args);
+
         if (isset($data['data']['appName'])) $data['appName'] = $data['data']['appName'];
         return ["epiiargs_data" => json_encode($data)];
     }

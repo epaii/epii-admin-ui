@@ -13,8 +13,20 @@
 <link rel="stylesheet" href="<?php echo $_ui_["static_url_pre"]; ?>js/plugins/bootStrap-addTabs/bootstrap.addtabs.css"
       type="text/css"
       media="screen"/>
+<link rel="stylesheet" href="<?php echo $_ui_["static_url_pre"]; ?>css/epii.css">
+
+
 <!-- Google Font: Source Sans Pro -->
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+<?php if (isset($_ui_["css"])) {
+    foreach ($_ui_["css"] as $css) {
+
+        ?>
+        <link rel="stylesheet" href="<?php echo $css; ?>">
+    <?php };
+} ?>
+
 <script>
     var Args = window.Args = <?php echo $_ui_["epiiargs_data"]; ?>;
     window.onEpiiInit = function (callback) {
