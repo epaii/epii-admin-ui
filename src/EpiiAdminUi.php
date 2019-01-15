@@ -1,4 +1,5 @@
 <?php
+
 namespace epii\admin\ui;
 
 use epii\admin\ui\lib\epiiadmin\EpiiAdminMenu;
@@ -18,8 +19,8 @@ class EpiiAdminUi
         "static_url_pre" => "https://epaii.github.io/epii-admin/public/epiiadmin-js/",
         "js_app_dir" => "static/js/app/",
         "site_url" => "",
-        "version"=>"0.0.1",
-        "css"=>[]
+        "version" => "0.0.1",
+        "css" => []
 
     ];
 
@@ -31,7 +32,7 @@ class EpiiAdminUi
     }
 
 
-    public static function showTopPage(IEpiiAdminUi $adminUi)
+    public static function showTopPage(IEpiiAdminUi $adminUi, Array $data = [], string $appName = null)
     {
 
 
@@ -43,8 +44,8 @@ class EpiiAdminUi
             "site_title" => "管理中心",
             "app_theme" => "danger",
             "app_left_theme" => "light",
-            "app_left_top_theme"=>"danger",
-            "app_left_selected_theme"=>"danger"
+            "app_left_top_theme" => "danger",
+            "app_left_selected_theme" => "danger"
 
         ], self::$common_config);
         $_config = $adminUi->getConfig()->getConfig();
@@ -65,10 +66,20 @@ class EpiiAdminUi
 
         $_data_["menulist"] = $asider->getAsideHtml($siteuserinfo);
 
-        $_ui_ = array_merge($_data_, self::getJsArgs(["title" => $_data_["site_title"], "isTop" => 1]));
+        if (!$data) {
+            $data = [];
+        }
+
+        if ($appName) {
+            $data["appName"] = $appName;
+        }
 
 
-        // print_r($_ui_);
+
+        $_ui_ = array_merge($_data_, self::getJsArgs(array_merge(["title" => $_data_["site_title"], "isTop" => 1],$data)));
+
+
+
 
         require_once __DIR__ . "/app/view/index/index.php";
 
@@ -77,10 +88,14 @@ class EpiiAdminUi
 
     public static function showPage(string $__CONTENT__, Array $data = [], string $appName = null)
     {
-        $_ui_ = array_merge(["site_title" => isset($data["title"]) ? $data["title"] : ""], self::$common_config, self::getJsArgs($data));
+        if (!$data) {
+            $data = [];
+        }
+
         if ($appName) {
             $data["appName"] = $appName;
         }
+        $_ui_ = array_merge(["site_title" => isset($data["title"]) ? $data["title"] : ""], self::$common_config, self::getJsArgs($data));
         require_once __DIR__ . "/app/view/common/layout.php";
     }
 
@@ -88,7 +103,7 @@ class EpiiAdminUi
     {
         $data = [
             "baseUrl" => self::$common_config["static_url_pre"] . "js/",
-            "appUrl" => self::$common_config["js_app_dir"],
+            "appUrl" => stripos(self::$common_config["js_app_dir"],"http")===0? self::$common_config["js_app_dir"]:(self::getUrl()."/".self::$common_config["js_app_dir"]),
             "pluginsUrl" => "./plugins/",
             "epiiInitFunctionsName" => "epiiInitFunctions",
             "init_models" => [],
