@@ -16,7 +16,7 @@ class EpiiAdminUi
 {
     private static $common_config = [
 
-        "static_url_pre" => "https://epaii.github.io/epii-admin/public/epiiadmin-js/",
+        "static_url_pre" => "http://epii.gitee.io/epiiadmin/",
         "js_app_dir" => "static/js/app/",
         "site_url" => "",
         "version" => "0.0.1",
