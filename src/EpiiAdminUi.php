@@ -20,6 +20,7 @@ class EpiiAdminUi
         "js_app_dir" => "static/js/app/",
         "site_url" => "",
         "version" => "0.0.1",
+        "require_config_file" => "",
         "css" => []
 
     ];
@@ -75,10 +76,7 @@ class EpiiAdminUi
         }
 
 
-
-        $_ui_ = array_merge($_data_, self::getJsArgs(array_merge(["title" => $_data_["site_title"], "isTop" => 1],$data)));
-
-
+        $_ui_ = array_merge($_data_, self::getJsArgs(array_merge(["title" => $_data_["site_title"], "isTop" => 1], $data)));
 
 
         require_once __DIR__ . "/app/view/index/index.php";
@@ -103,7 +101,7 @@ class EpiiAdminUi
     {
         $data = [
             "baseUrl" => self::$common_config["static_url_pre"] . "js/",
-            "appUrl" => stripos(self::$common_config["js_app_dir"],"http")===0? self::$common_config["js_app_dir"]:(self::getUrl()."/".self::$common_config["js_app_dir"]),
+            "appUrl" => stripos(self::$common_config["js_app_dir"], "http") === 0 ? self::$common_config["js_app_dir"] : (self::getUrl() . "/" . self::$common_config["js_app_dir"]),
             "pluginsUrl" => "./plugins/",
             "epiiInitFunctionsName" => "epiiInitFunctions",
             "init_models" => [],
@@ -111,6 +109,7 @@ class EpiiAdminUi
             "site_url" => self::$common_config["site_url"] ? self::$common_config["site_url"] : self::getUrl(),
             "version" => self::$common_config["version"],
             "window_id" => md5(time()),
+            "require_config_file" => self::$common_config["require_config_file"] ? self::$common_config["require_config_file"] : "",
             "data" => ['title' => isset($data_args["title"]) ? $data_args["title"] : ""]
         ];
 
