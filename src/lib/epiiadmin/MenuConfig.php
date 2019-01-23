@@ -16,10 +16,10 @@ class MenuConfig
     private $_show_id = 0;
     private $_opened_all = false;
 
-    public function addMenu(int $id, int $pid, string $name, $url = "", $icon_class = "fa-circle-o", $badge_content = null, $badge_class = "badge badge-danger")
+    public function addMenu(int $id, int $pid, string $name, $url = "", $icon_class = "fa-circle-o", $badge_content = null, $badge_class = "badge badge-danger",$_blank=false)
     {
 
-        $this->config[] = ["id" => $id, "name" => $name, "url" => $url, "icon" => " " . $icon_class, "pid" => $pid, "badge" => $badge_content, "badge_class" => $badge_class];
+        $this->config[] = ["id" => $id, "name" => $name, "url" => $url, "icon" => " " . $icon_class, "pid" => $pid, "badge" => $badge_content, "badge_class" => $badge_class,"_blank"=>$_blank];
 
         return $this;
     }

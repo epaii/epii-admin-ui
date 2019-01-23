@@ -1,4 +1,5 @@
 <?php
+
 namespace epii\admin\ui\lib\epiiadmin;
 
 use epii\admin\ui\lib\i\epiiadmin\IAsideMaker;
@@ -23,13 +24,15 @@ class EpiiAdminMenu implements IAsideMaker
     private $_menu_open = false;
 
 
-    private function addMenu($id, $name, $url, $icon, $pid = 0, $badge_string = null, $badge_class = "badge badge-danger")
+    private function addMenu($id, $name, $url, $icon, $pid = 0, $badge_string = null, $badge_class = null, $_blank = false)
     {
 
         if ($badge_class == null) {
             $badge_class = "badge badge-danger";
         }
         $this->_menu[$id] = array("m_code" => "_code_" . $id, "id" => $id, "title" => $name, "url" => $url, "icon" => $icon, "pid" => $pid, "p_code" => "_code_" . $pid);
+
+        $_blank && ($this->_menu[$id]['_blank'] = 1);
 
 
         $badge_string && ($this->_menu[$id]['badge'] = '<span class="right ' . $badge_class . '">' . $badge_string . '</span>');
@@ -48,7 +51,7 @@ class EpiiAdminMenu implements IAsideMaker
     {
 
 
-        $menu = $this->getTreeMenu(0, '<li class="nav-item@class"><a href="@url@addtabs" @addtab data-url="@url"      data-title="@title"  class="nav-link@aclass"><i class="nav-icon @icon"></i> <p>@title@caret@badge</p></a> @childlist</li>@after_header', [$select_id, $this->_menu[$select_id]['pid']], '', 'ul', 'class="nav nav-treeview"');
+        $menu = $this->getTreeMenu(0, '<li class="nav-item@class"><a href="@url@addtabs" @addtab data-url="@url"      data-title="@title"  class="nav-link@aclass" @target><i class="nav-icon @icon"></i> <p>@title@caret@badge</p></a> @childlist</li>@after_header', [$select_id, $this->_menu[$select_id]['pid']], '', 'ul', 'class="nav nav-treeview"');
 
 
         return $menu;
@@ -91,6 +94,10 @@ class EpiiAdminMenu implements IAsideMaker
         $childs = $this->getChild($myid);
         if ($childs) {
             foreach ($childs as $value) {
+
+                $_blank = isset($value["_blank"]) && $value["_blank"];
+
+
                 $id = $value['id'];
                 unset($value['child']);
                 $selected = in_array($id, (is_array($selectedids) ? $selectedids : explode(',', $selectedids))) ? 'selected' : '';
@@ -109,14 +116,15 @@ class EpiiAdminMenu implements IAsideMaker
                 $value = array(
                     '@childlist' => $childlist,
                     '@url' => $childdata || !isset($value['@url']) ? "#" : $value['@url'],
-                    '@addtabs' => $childdata || !isset($value['@url']) ? "" : (stripos($value['@url'], "?") !== false ? "&" : "?") . "ref=addtabs&_code_id=" . $id,
+                    '@addtabs' => $childdata || !isset($value['@url']) || $_blank ? "" : (stripos($value['@url'], "?") !== false ? "&" : "?") . "ref=addtabs&_code_id=" . $id,
                     '@caret' => ($childdata && (!isset($value['@badge']) || !$value['@badge']) ? '<i class="right fa fa-angle-left"></i>' : ''),
                     '@badge' => isset($value['@badge']) ? $value['@badge'] : '',
                     '@class' => ($disabled ? ' disabled' : '') . ($childdata ? ' has-treeview' . ($selected || $this->_menu_open ? ' menu-open' : '') : ''),
                     '@aclass' => (!$childdata && $selected ? ' active' : ''),
                     '@addtab_id' => $childdata ? 0 : $value['@id'],
                     '@after_header' => isset($value['@after_header']) ? $value['@after_header'] : '',
-                    '@addtab' => $childdata ? "" : 'data-addtab="tab_' . $value['@id'] . '"'
+                    '@addtab' => $childdata ? "" : ($_blank ? "" : 'data-addtab="tab_') . $value['@id'] . '"',
+                    '@target' => $_blank ? 'target="_blank"' : ""
 
                 );
 
@@ -134,7 +142,7 @@ class EpiiAdminMenu implements IAsideMaker
             if (isset($value['header'])) {
                 $this->addHeader($value['after_id'], $value['title']);
             } else
-                $this->addMenu($value['id'], $value['name'], $value['url'], $value['icon'], $value['pid'], isset($value['badge']) ? $value['badge'] : null, isset($value['badge_class']) ? $value['badge_class'] : null);
+                $this->addMenu($value['id'], $value['name'], $value['url'], $value['icon'], $value['pid'], isset($value['badge']) ? $value['badge'] : null, isset($value['badge_class']) ? $value['badge_class'] : null,$value['_blank']);
         }, $data['menu']);
 
         $this->_menu_open = $data['menu_open'];
