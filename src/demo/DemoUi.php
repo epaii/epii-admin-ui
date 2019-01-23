@@ -32,7 +32,7 @@ class DemoUi implements IEpiiAdminUi
         $m_config->addMenu(2, 1, "仪表盘3", "http://www.baidu.com", "fa fa-circle-o");
 
         $m_config->addMenuHeader("小组件");
-        $m_config->addMenu(5, 0, "开发文档", "http://docs.epii-admin.epii.cn", "fa fa-dashboard");
+        $m_config->addMenu(5, 0, "开发文档", "http://docs.epii-admin.epii.cn", "fa fa-dashboard",null,null,true);
         $m_config->selectId(2)->isAllOpen(true);
 
         return $m_config;
