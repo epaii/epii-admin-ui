@@ -32,6 +32,13 @@ class EpiiAdminUi
             self::$common_config = array_merge(self::$common_config, $config);
     }
 
+    private static $plugins_data = [];
+
+    public static function addPluginData(string $key, string $value)
+    {
+        self::$plugins_data[$key] = $value;
+    }
+
 
     public static function showTopPage(IEpiiAdminUi $adminUi, Array $data = [], string $appName = null)
     {
@@ -110,7 +117,8 @@ class EpiiAdminUi
             "version" => self::$common_config["version"],
             "window_id" => md5(time()),
             "require_config_file" => self::$common_config["require_config_file"] ? self::$common_config["require_config_file"] : "",
-            "data" => ['title' => isset($data_args["title"]) ? $data_args["title"] : ""]
+            "data" => ['title' => isset($data_args["title"]) ? $data_args["title"] : ""],
+            "pluginsData" =>self::$plugins_data
         ];
 
         if ($data_args)
