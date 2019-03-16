@@ -15,9 +15,16 @@
       media="screen"/>
 <link rel="stylesheet" href="<?php echo $_ui_["static_url_pre"]; ?>css/epii.css">
 
+<style>
+    @font-face {
+        font-family: 'FontAwesome';
+        src: url('<?php echo $_ui_["fontawesome_fonts_url_pre"]; ?>/fontawesome-webfont.eot?v=4.7.0');
+        src: url('<?php echo $_ui_["fontawesome_fonts_url_pre"]; ?>/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('<?php echo $_ui_["fontawesome_fonts_url_pre"]; ?>/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('<?php echo $_ui_["fontawesome_fonts_url_pre"]; ?>/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('<?php echo $_ui_["fontawesome_fonts_url_pre"]; ?>/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('<?php echo $_ui_["fontawesome_fonts_url_pre"]; ?>/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+        font-weight: normal;
+        font-style: normal;
+    }
 
-<!-- Google Font: Source Sans Pro -->
-<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</style>
 
 <?php if (isset($_ui_["css"])) {
     foreach ($_ui_["css"] as $css) {

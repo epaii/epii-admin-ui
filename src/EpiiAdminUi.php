@@ -16,10 +16,11 @@ class EpiiAdminUi
 {
     private static $common_config = [
 
-        "static_url_pre" => "http://epii.gitee.io/epiiadmin/",
+        "static_url_pre" => "https://epii.gitee.io/epiiadmin-js/",
+        "fontawesome_fonts_url_pre" => "https://epaii.github.io/epii-admin-static/js/plugins/font-awesome/fonts",
         "js_app_dir" => "static/js/app/",
         "site_url" => "",
-        "version" => "0.0.1",
+        "version" => "0.0.2",
         "require_config_file" => "",
         "css" => []
 
@@ -118,7 +119,7 @@ class EpiiAdminUi
             "window_id" => md5(time()),
             "require_config_file" => self::$common_config["require_config_file"] ? self::$common_config["require_config_file"] : "",
             "data" => ['title' => isset($data_args["title"]) ? $data_args["title"] : ""],
-            "pluginsData" =>self::$plugins_data
+            "pluginsData" => self::$plugins_data
         ];
 
         if ($data_args)
