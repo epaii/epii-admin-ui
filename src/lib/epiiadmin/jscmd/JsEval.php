@@ -19,6 +19,6 @@ class JsEval extends JsCmdCommon
 {
     public function reload_menu_badge($menu_id = "")
     {
-        return $this->add_string("window.EpiiAdmin.reload_menu_badge('" . $menu_id . "'');");
+        return $this->add_string("window.EpiiAdmin.reload_menu_badge('" . $menu_id . "');");
     }
 }
