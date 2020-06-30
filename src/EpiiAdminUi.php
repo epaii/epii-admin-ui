@@ -17,7 +17,7 @@ class EpiiAdminUi
     private static $common_config = [
 
         "static_url_pre" => "https://epii.gitee.io/epiiadmin-js/",
-        "fontawesome_fonts_url_pre" => "https://epaii.github.io/epii-admin-static/js/plugins/font-awesome/fonts",
+        "fontawesome_fonts_url_pre" => "https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/fonts",
         "js_app_dir" => "static/js/app/",
         "site_url" => "",
         "version" => "0.0.8",
