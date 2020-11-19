@@ -4,7 +4,7 @@
         <img src="<?php echo $_ui_["site_logo_show"]; ?>"
              alt="<?php echo $_ui_["site_name_show"]; ?>"
              class="brand-image img-circle elevation-3"
-             style="opacity: .8">
+             >
         <span class="brand-text font-weight-light"><?php echo $_ui_["site_name_show"]; ?></span>
     </a>
 
