@@ -22,8 +22,8 @@ class EpiiAdminUi
         "site_url" => "",
         "version" => "0.0.8",
         "require_config_file" => "",
-        "css" => []
-
+        "css" => [],
+        "page_loading"=>'<div style="display: flex;justify-content: center;align-items: center;height:90vh;font-size:25px">加载中...</div>'
     ];
 
 
