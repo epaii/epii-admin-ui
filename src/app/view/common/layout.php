@@ -18,8 +18,7 @@
     <?php include_once __DIR__ . "/script.php"; ?>
     <script>
         window.onEpiiInit(function() {
-            $("#___epii_loading").hide();
-            $("#___epii_content").show("slow","linear");
+            <?php echo $_ui_["page_loading_finish"];?>
         });
     </script>
 </body>

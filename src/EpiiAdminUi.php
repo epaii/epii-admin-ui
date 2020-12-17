@@ -23,7 +23,8 @@ class EpiiAdminUi
         "version" => "0.0.8",
         "require_config_file" => "",
         "css" => [],
-        "page_loading"=>'<div style="display: flex;justify-content: center;align-items: center;height:90vh;font-size:25px">加载中...</div>'
+        "page_loading"=>'<div style="display: flex;justify-content: center;align-items: center;height:90vh;font-size:25px">加载中...</div>',
+        "page_loading_finish"=>' $("#___epii_loading").hide();$("#___epii_content").show("slow","linear");'
     ];
 
 
