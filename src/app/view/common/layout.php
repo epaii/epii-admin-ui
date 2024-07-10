@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <?php include_once __DIR__ . "/meta.php"; ?>
+    <?php include_once __DIR__ . "/meta.php";?>
 
 </head>
 
@@ -15,11 +15,33 @@
     </div>
 
     <!-- ./wrapper -->
-    <?php include_once __DIR__ . "/script.php"; ?>
+    <?php include_once __DIR__ . "/script.php";?>
     <script>
         window.onEpiiInit(function() {
-            <?php echo $_ui_["page_loading_finish"];?>
+            <?php echo $_ui_["page_loading_finish"]; ?>
+            try {
+                    if(window.top.addEpiiAdminListener){
+                        window.top.addEpiiAdminListener(window);
+                    }
+                } catch (error) {
+                    
+                }
         });
+        try {
+            if(window.top.isDarkTheme){
+            let isDarkTheme = window.top.isDarkTheme();
+            if(isDarkTheme){
+                 document.body.style.backgroundColor = "transparent";
+                document.body.style.color = "#fff";
+            }
+        } 
+        } catch (error) {
+            
+        }
+       
+
+       
+
     </script>
 </body>
 

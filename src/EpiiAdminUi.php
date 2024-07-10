@@ -5,7 +5,6 @@ namespace epii\admin\ui;
 use epii\admin\ui\lib\epiiadmin\EpiiAdminMenu;
 use epii\admin\ui\lib\i\epiiadmin\IEpiiAdminUi;
 
-
 /**
  * Created by PhpStorm.
  * User: mrren
@@ -15,23 +14,46 @@ use epii\admin\ui\lib\i\epiiadmin\IEpiiAdminUi;
 class EpiiAdminUi
 {
     private static $common_config = [
-
-        "static_url_pre" => "https://epii.gitee.io/epiiadmin-js/",
-        "fontawesome_fonts_url_pre" => "https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/fonts",
+        "xxAdmin" => false,
+        "xxAdmin_static_url_pre"=>"",
+        "xxAdminSetting"=>[
+            "setDarkTheme"=>false,
+            "setAppTheme"=>null,
+            "setNavMode"=>"vertical",// "vertical" | "horizontal";
+            "setNavTheme"=>"dark",// "dark" | "light" | "header-dark";
+            "setSettingBtnShow"=>true,
+            "setSwitchTheme"=>true,
+            "setNavDarkTheme"=>false
+        ],
+        "static_url_pre" => "https://epiiadmin-js.chinacloudsites.cn/",
+        "fontawesome_fonts_url_pre" => "https://epiiadmin-js.chinacloudsites.cn/js/plugins/font-awesome/fonts/",
         "js_app_dir" => "static/js/app/",
         "site_url" => "",
         "version" => "0.0.8",
         "require_config_file" => "",
         "css" => [],
-        "page_loading"=>'<div style="display: flex;justify-content: center;align-items: center;height:90vh;font-size:25px">加载中...</div>',
-        "page_loading_finish"=>' $("#___epii_loading").hide();$("#___epii_content").show("slow","linear");'
+        "page_loading" => '<div style="display: flex;justify-content: center;align-items: center;height:90vh;font-size:25px">加载中...</div>',
+        "page_loading_finish" => ' $("#___epii_loading").hide();$("#___epii_content").show("slow","linear");',
     ];
 
-
-    public static function setBaseConfig(Array $config)
+    public static function enableXxAdmin(bool $enable,string $static_pre=null,array $xxAdminSetting=[])
     {
-        if ($config)
+        self::$common_config["xxAdmin"] = $enable;
+        if(!$static_pre){
+            self::$common_config["xxAdmin_static_url_pre"] = self::$common_config["static_url_pre"]."xx-admin/";
+        }else{
+            self::$common_config["xxAdmin_static_url_pre"]  = $static_pre;
+        }
+
+        self::$common_config["xxAdminSetting"]  = array_merge(self::$common_config["xxAdminSetting"] ,$xxAdminSetting);
+    }
+
+    public static function setBaseConfig(array $config)
+    {
+        if ($config) {
             self::$common_config = array_merge(self::$common_config, $config);
+        }
+
     }
 
     private static $plugins_data = [];
@@ -41,10 +63,8 @@ class EpiiAdminUi
         self::$plugins_data[$key] = $value;
     }
 
-
-    public static function showTopPage(IEpiiAdminUi $adminUi, Array $data = [], string $appName = null)
+    public static function showTopPage(IEpiiAdminUi $adminUi, array $data = [], string $appName = null)
     {
-
 
         $_data_ = array_merge([
             "user_avatar" => self::$common_config["static_url_pre"] . "img/user2-160x160.jpg",
@@ -55,7 +75,7 @@ class EpiiAdminUi
             "app_theme" => "danger",
             "app_left_theme" => "light",
             "app_left_top_theme" => "danger",
-            "app_left_selected_theme" => "danger"
+            "app_left_selected_theme" => "danger",
 
         ], self::$common_config);
         $_config = $adminUi->getConfig()->getConfig();
@@ -65,7 +85,6 @@ class EpiiAdminUi
 
         $_data_["navlist"] = $adminUi->getTopRightNavHtml();
 
-
         $menu = $adminUi->getLeftMenuData();
 
         $siteuserinfo['menu'] = $menu->getConfig();
@@ -74,7 +93,11 @@ class EpiiAdminUi
 
         $asider = new EpiiAdminMenu();
 
-        $_data_["menulist"] = $asider->getAsideHtml($siteuserinfo);
+        if (!self::$common_config["xxAdmin"]) {
+            $_data_["menulist"] = $asider->getAsideHtml($siteuserinfo);
+        } else {
+            $_data_["siteuserinfo"] = $siteuserinfo;
+        }
 
         if (!$data) {
             $data = [];
@@ -84,16 +107,19 @@ class EpiiAdminUi
             $data["appName"] = $appName;
         }
 
-
         $_ui_ = array_merge($_data_, self::getJsArgs(array_merge(["title" => $_data_["site_title"], "isTop" => 1], $data)));
 
+        if (self::$common_config["xxAdmin"]) {
+            require_once __DIR__ . "/app/view/index/xxAdmin.php";
 
-        require_once __DIR__ . "/app/view/index/index.php";
+        } else {
+            require_once __DIR__ . "/app/view/index/index.php";
 
+        }
 
     }
 
-    public static function showPage(string $__CONTENT__, Array $data = [], string $appName = null)
+    public static function showPage(string $__CONTENT__, array $data = [], string $appName = null)
     {
         if (!$data) {
             $data = [];
@@ -120,16 +146,22 @@ class EpiiAdminUi
             "window_id" => md5(time()),
             "require_config_file" => self::$common_config["require_config_file"] ? self::$common_config["require_config_file"] : "",
             "data" => ['title' => isset($data_args["title"]) ? $data_args["title"] : ""],
-            "pluginsData" => self::$plugins_data
+            "pluginsData" => self::$plugins_data,
         ];
 
-        if ($data_args)
+        if ($data_args) {
             $data['data'] = array_merge($data['data'], $data_args);
+        }
 
-        if (isset($data['data']['appName'])) $data['appName'] = $data['data']['appName'];
-        return ["epiiargs_data" => json_encode($data)];
+        if (isset($data['data']['appName'])) {
+            $data['appName'] = $data['data']['appName'];
+        }
+  
+        
+            return ["epiiargs_data" => json_encode($data)];
+
+       
     }
-
 
     private static function is_https()
     {
